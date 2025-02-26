@@ -1,0 +1,19 @@
+#include <iostream>
+
+int max(int a, int b) {
+    if (a > b){ 
+        return a;
+    }
+    else {
+        return b;
+    }
+}
+int main() {
+    int x, y;
+    std::cout << "Enter two numbers: ";
+    std::cin >> x >> y;
+
+    std::cout << "Max: " << max(x, y) << std::endl;
+
+    return 0;
+}
