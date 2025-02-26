@@ -1,0 +1,21 @@
+#include <iostream>
+
+int main() {
+    int num;
+    std::cout << "Enter a number: ";
+    std::cin >> num;
+
+    std::string binary = " ";
+
+    if (num == 0) {
+        binary = "0";
+    } else {
+        while (num > 0) {
+            binary = char((num % 2) + '0') + binary;  
+            num /= 2;
+        }
+    }
+
+    std::cout << "The number at 2-nd system: " << binary << std::endl;
+    return 0;
+}
