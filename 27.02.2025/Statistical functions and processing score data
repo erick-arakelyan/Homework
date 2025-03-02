@@ -1,0 +1,57 @@
+#include <iostream>
+#include <cmath>
+
+double calculateMean(double data[], int size) {
+    double sum = 0.0;
+    for (int i = 0; i < size; i++) {
+        sum += data[i];
+    }
+    return sum / size;
+}
+
+double calculateStandardDeviation(double data[], int size, double mean) {
+    double sum_of_squares = 0.0;
+    for (int i = 0; i < size; i++) {
+        sum_of_squares += (data[i] - mean) * (data[i] - mean);
+    }
+    return std::sqrt(sum_of_squares / size);
+}
+
+double findMin(double data[], int size) {
+    double min = data[0];
+    for (int i = 1; i < size; i++) {
+        if (data[i] < min) {
+            min = data[i];
+        }
+    }
+    return min;
+}
+
+double findMax(double data[], int size) {
+    double max = data[0];
+    for (int i = 1; i < size; i++) {
+        if (data[i] > max) {
+            max = data[i];
+        }
+    }
+    return max;
+}
+
+int main() {
+    double scores[] = {85, 90, 78, 92, 88, 76, 95, 89, 85, 91};
+    int size = 10;  // Explicitly passing the size of the array
+
+    double mean = calculateMean(scores, size);
+    double stdDev = calculateStandardDeviation(scores, size, mean);
+    double mode = calculateMode(scores, size);
+    double min = findMin(scores, size);
+    double max = findMax(scores, size);
+    
+    std::cout << "Mean: " << mean << std::endl;
+    std::cout << "Standard Deviation: " << stdDev << std::endl;
+    std::cout << "Mode: " << mode << std::endl;
+    std::cout << "Min: " << min << std::endl;
+    std::cout << "Max: " << max << std::endl;
+
+    return 0;
+}
