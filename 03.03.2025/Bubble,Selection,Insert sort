@@ -1,0 +1,93 @@
+#include <iostream>
+
+void inputGrades(int grades[], int size);
+void bubbleSort(int grades[], int size);
+void selectionSort(int grades[], int size);
+void insertionSort(int grades[], int size);
+void displayGrades(const int grades[], int size);
+
+int main() {
+    const int SIZE = 30;
+    int grades[SIZE], gradesBubble[SIZE], gradesSelection[SIZE], gradesInsertion[SIZE];
+
+    inputGrades(grades, SIZE);
+
+    for (int i = 0; i < SIZE; i++) {
+        gradesBubble[i] = grades[i];
+        gradesSelection[i] = grades[i];
+        gradesInsertion[i] = grades[i];
+    }
+
+    std::cout << "\nSorting using Bubble Sort:\n";
+    bubbleSort(gradesBubble, SIZE);
+    displayGrades(gradesBubble, SIZE);
+
+    std::cout << "\nSorting using Selection Sort:\n";
+    selectionSort(gradesSelection, SIZE);
+    displayGrades(gradesSelection, SIZE);
+
+    std::cout << "\nSorting using Insertion Sort:\n";
+    insertionSort(gradesInsertion, SIZE);
+    displayGrades(gradesInsertion, SIZE);
+
+    return 0;
+}
+
+void inputGrades(int grades[], int size) {
+    std::cout << "Enter the grades of " << size << " students:\n";
+    for (int i = 0; i < size; i++) {
+        std::cout << "Grade " << i + 1 << ": ";
+        std::cin >> grades[i];
+    }
+}
+
+void bubbleSort(int grades[], int size) {
+    bool swapped;
+    for (int i = 0; i < size - 1; i++) {
+        swapped = false;
+        for (int j = 0; j < size - i - 1; j++) {
+            if (grades[j] > grades[j + 1]) {
+                // Manual swap
+                int temp = grades[j];
+                grades[j] = grades[j + 1];
+                grades[j + 1] = temp;
+                swapped = true;
+            }
+        }
+        if (!swapped) break;
+    }
+}
+
+void selectionSort(int grades[], int size) {
+    for (int i = 0; i < size - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < size; j++) {
+            if (grades[j] < grades[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        int temp = grades[i];
+        grades[i] = grades[minIndex];
+        grades[minIndex] = temp;
+    }
+}
+
+void insertionSort(int grades[], int size) {
+    for (int i = 1; i < size; i++) {
+        int key = grades[i];
+        int j = i - 1;
+        while (j >= 0 && grades[j] > key) {
+            grades[j + 1] = grades[j];
+            j--;
+        }
+        grades[j + 1] = key;
+    }
+}
+
+void displayGrades(const int grades[], int size) {
+    for (int i = 0; i < size; i++) {
+        std::cout << grades[i] << " ";
+    }
+    std::cout << "\n";
+}
