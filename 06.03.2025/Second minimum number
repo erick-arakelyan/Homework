@@ -1,0 +1,32 @@
+#include <iostream>
+#include <limits>
+
+int secondMin(int arr[], int size) {
+    int min1 = std::numeric_limits<int>::max();
+    int min2 = std::numeric_limits<int>::max();
+
+    for (int i = 0; i < size; i++) {
+        if (arr[i] < min1) {
+            min2 = min1;
+            min1 = arr[i];
+        } else if (arr[i] < min2 && arr[i] != min1) {
+            min2 = arr[i];
+        }
+    }
+
+    return (min2 == std::numeric_limits<int>::max()) ? -1 : min2;
+}
+
+int main() {
+    int arr[] = {4, 2, 1, 5, 3, 1};
+    int size = sizeof(arr) / sizeof(arr[0]); // Չափը հաշվում ենք այստեղ
+
+    int result = secondMin(arr, size);
+    
+    if (result != -1)
+        std::cout << "The second smallest number is: " << result << std::endl;
+    else
+        std::cout << "No second distinct minimum found." << std::endl;
+
+    return 0;
+}
