@@ -1,0 +1,113 @@
+#include <iostream>
+using namespace std;
+
+const int MAX_LEN = 100;
+
+void inputCar(char brands[][MAX_LEN], char models[][MAX_LEN], int* years, float* prices, int index) {
+    cout << "Enter details for car " << index + 1 << ":\n";
+    cout << "Brand: ";
+    cin >> brands[index];
+
+    cout << "Model: ";
+    cin >> models[index];
+
+    cout << "Year: ";
+    cin >> *(years + index);
+
+    cout << "Price: ";
+    cin >> *(prices + index);
+}
+
+void displayCar(const char brands[][MAX_LEN], const char models[][MAX_LEN], const int* years, const float* prices, int index) {
+    cout << "Car " << index + 1 << ":\n";
+    cout << "Brand: " << brands[index] << "\n";
+    cout << "Model: " << models[index] << "\n";
+    cout << "Year: " << *(years + index) << "\n";
+    cout << "Price: $" << *(prices + index) << "\n";
+    cout << "--------------------------\n";
+}
+
+void calculateAveragePrice(const float* prices, int n, float& avgPrice) {
+    float sum = 0;
+    for (int i = 0; i < n; ++i) {
+        sum += *(prices + i);
+    }
+    avgPrice = sum / n;
+}
+
+int findMostExpensiveCar(const float* prices, int n) {
+    int maxIndex = 0;
+    for (int i = 1; i < n; ++i) {
+        if (*(prices + i) > *(prices + maxIndex)) {
+            maxIndex = i;
+        }
+    }
+    return maxIndex;
+}
+
+bool compareStrings(const char* a, const char* b) {
+    while (*a && *b) {
+        if (*a != *b)
+            return false;
+        ++a;
+        ++b;
+    }
+    return (*a == '\0' && *b == '\0');
+}
+
+int searchCarByBrand(const char brands[][MAX_LEN], int n, const char* searchBrand) {
+    for (int i = 0; i < n; ++i) {
+        if (compareStrings(brands[i], searchBrand)) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int n;
+    cout << "How many cars do you want to enter? ";
+    cin >> n;
+
+    char (*brands)[MAX_LEN] = new char[n][MAX_LEN];
+    char (*models)[MAX_LEN] = new char[n][MAX_LEN];
+    int* years = new int[n];
+    float* prices = new float[n];
+
+    for (int i = 0; i < n; ++i) {
+        inputCar(brands, models, years, prices, i);
+    }
+
+    cout << "\nAll Car Details:\n";
+    for (int i = 0; i < n; ++i) {
+        displayCar(brands, models, years, prices, i);
+    }
+
+    float avgPrice;
+    calculateAveragePrice(prices, n, avgPrice);
+    cout << "Average Price: $" << avgPrice << "\n";
+
+    int maxIndex = findMostExpensiveCar(prices, n);
+    cout << "\nMost Expensive Car:\n";
+    displayCar(brands, models, years, prices, maxIndex);
+
+    char searchBrand[MAX_LEN];
+    cout << "Enter a brand to search: ";
+    cin >> searchBrand;
+
+    int foundIndex = searchCarByBrand(brands, n, searchBrand);
+    if (foundIndex != -1) {
+        cout << "\nCar found:\n";
+        displayCar(brands, models, years, prices, foundIndex);
+    } else {
+        cout << "Brand not found.\n";
+    }
+
+
+    delete[] brands;
+    delete[] models;
+    delete[] years;
+    delete[] prices;
+
+    return 0;
+}
